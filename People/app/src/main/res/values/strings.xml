@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">People</string>
+    <string name="add_person_text">Add a person</string>
+    <string name="btn_add">Add</string>
+</resources>
