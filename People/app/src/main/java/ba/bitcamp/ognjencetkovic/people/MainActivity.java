@@ -38,6 +38,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Person person = new Person(mFirstNameInput.getText().toString(), mLastNameInput.getText().toString());
                 People.get().add(person);
+                mFirstNameInput.setText("");
+                mLastNameInput.setText("");
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -83,32 +85,34 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private class PersonHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class PersonHolder extends RecyclerView.ViewHolder {
 
         private Person mPerson;
 
         private TextView mNameTextView;
         private TextView mDateTextView;
+        private Button mButtonDelete;
 
         public PersonHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(this);
-
             mNameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.created_text_view);
+            mButtonDelete = (Button) itemView.findViewById(R.id.button_delete);
 
         }
 
-        public void bindCrime(Person person) {
+        public void bindCrime(final Person person) {
             mPerson = person;
             mNameTextView.setText(mPerson.getFirstName() + " " + mPerson.getLastName());
             mDateTextView.setText(mPerson.getCreated().getTime().toString());
-        }
-
-        @Override
-        public void onClick(View v) {
-            //Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!", Toast.LENGTH_SHORT).show();
+            mButtonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    People.get().getPersons().remove(person);
+                    mAdapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 

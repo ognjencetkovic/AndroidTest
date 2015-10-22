@@ -30,4 +30,8 @@ public class People {
         return mPersons;
     }
 
+    public void delete(Person person) {
+        mPersons.remove(person);
+    }
+
 }
