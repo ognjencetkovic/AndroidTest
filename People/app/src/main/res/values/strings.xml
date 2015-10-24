@@ -6,4 +6,7 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="edit_person">Edit person</string>
+    <string name="first_name_sort_text">Sort by first name</string>
+    <string name="last_name_sort_text">Sort by last name</string>
+    <string name="incorrect_form">Please fill out the form first!</string>
 </resources>

@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
@@ -21,6 +25,8 @@ public class MainActivity extends ActionBarActivity {
     private EditText mFirstNameInput;
     private EditText mLastNameInput;
     private Button mAddBtn;
+    private RadioButton mFirstNameSortButton;
+    private RadioButton mLastNameSortButton;
     private RecyclerView mRecyclerView;
     private PersonAdapter mAdapter;
 
@@ -37,6 +43,10 @@ public class MainActivity extends ActionBarActivity {
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mFirstNameInput.getText().toString().equals("") || mLastNameInput.getText().toString().equals("")) {
+                    Toast.makeText(MainActivity.this, R.string.incorrect_form, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Person person = new Person(mFirstNameInput.getText().toString(), mLastNameInput.getText().toString());
                 People.get().add(person);
                 mFirstNameInput.setText("");
@@ -47,6 +57,41 @@ public class MainActivity extends ActionBarActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         updateUI();
+
+        mFirstNameSortButton = (RadioButton) findViewById(R.id.first_name_sort);
+        mLastNameSortButton = (RadioButton) findViewById(R.id.last_name_sort);
+
+        mFirstNameSortButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mLastNameSortButton.setChecked(false);
+                    Collections.sort(People.get().getPersons(), new Comparator<Person>() {
+                        @Override
+                        public int compare(Person p1, Person p2) {
+                            return p1.getFirstName().compareTo(p2.getFirstName());
+                        }
+                    });
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        mLastNameSortButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mFirstNameSortButton.setChecked(false);
+                    Collections.sort(People.get().getPersons(), new Comparator<Person>() {
+                        @Override
+                        public int compare(Person p1, Person p2) {
+                            return p1.getLastName().compareTo(p2.getLastName());
+                        }
+                    });
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
     }
 

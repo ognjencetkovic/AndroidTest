@@ -34,6 +34,18 @@
         android:id="@+id/add_button"
         android:layout_gravity="center_horizontal"/>
 
+    <RadioButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name_sort_text"
+        android:id="@+id/first_name_sort" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name_sort_text"
+        android:id="@+id/last_name_sort" />
+
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/person_recycler_view"
