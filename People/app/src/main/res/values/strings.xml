@@ -3,4 +3,7 @@
     <string name="add_person_text">Add a person</string>
     <string name="btn_add">Add</string>
     <string name="delete_button">X</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="edit_person">Edit person</string>
 </resources>

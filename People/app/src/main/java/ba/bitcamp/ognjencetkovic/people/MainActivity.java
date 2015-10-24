@@ -1,5 +1,6 @@
 package ba.bitcamp.ognjencetkovic.people;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,7 +77,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onBindViewHolder(PersonHolder holder, int position) {
             Person person = mPersons.get(position);
-            holder.bindCrime(person);
+            holder.bindPerson(person);
         }
 
         @Override
@@ -85,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private class PersonHolder extends RecyclerView.ViewHolder {
+    private class PersonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Person mPerson;
 
@@ -95,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
 
         public PersonHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
 
             mNameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.created_text_view);
@@ -102,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        public void bindCrime(final Person person) {
+        public void bindPerson(final Person person) {
             mPerson = person;
             mNameTextView.setText(mPerson.getFirstName() + " " + mPerson.getLastName());
             mDateTextView.setText(mPerson.getCreated().getTime().toString());
@@ -113,6 +115,13 @@ public class MainActivity extends ActionBarActivity {
                     mAdapter.notifyDataSetChanged();
                 }
             });
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), EditPersonActivity.class);
+            intent.putExtra("person_id", mPerson.getId());
+            startActivity(intent);
         }
     }
 

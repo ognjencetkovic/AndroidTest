@@ -2,6 +2,7 @@ package ba.bitcamp.ognjencetkovic.people;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by ognjen.cetkovic on 21/10/15.
@@ -34,4 +35,12 @@ public class People {
         mPersons.remove(person);
     }
 
+    public Person getPerson(UUID id) {
+        for (Person person : mPersons) {
+            if (person.getId().equals(id)) {
+                return person;
+            }
+        }
+        return null;
+    }
 }
